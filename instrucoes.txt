@@ -1,0 +1,43 @@
+#permissão para ler a porta usb 
+sudo chmod 666 /dev/ttyUSB0
+sudo chmod 666 /dev/ttyUSB1
+#permissao para o diretório de trabalho sir
+sudo chmod -R 777 . 
+
+#instalar apache e utilidades 
+sudo apt-get install apache2 apache2-utils libexpat1 ssl-cert python
+sudo apt-get install libapache2-mod-wsgi
+
+#resetar apache
+sudo /etc/init.d/apache2 restart
+service apache2 start
+service apache2 restart
+service apache2 stop
+
+#arquivo flask.conf do apache2/sites-available
+<VirtualHost *:80>
+    ServerName www.suelliton.ddns.net
+
+    WSGIDaemonProcess flaskTest threads=5
+    WSGIScriptAlias / /home/suelliton/sir-app/wsgi.py
+
+    <Directory /home/suelliton/sir-app/>
+     	WSGIProcessGroup flaskTest
+        WSGIApplicationGroup %{GLOBAL}
+        WSGIScriptReloading On       
+        Require all granted
+        
+    </Directory>
+</VirtualHost>
+
+#instalar pip
+sudo apt-get install python-pip
+
+#instalar flask e outros
+sudo pip install flask
+sudo pip install requests
+sudo pip install serial ou pyserial
+
+
+
+
